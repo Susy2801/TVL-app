@@ -69,6 +69,10 @@
   }
 }
 
+.header h2 {
+  color: white;
+}
+
 .loading {
   width: 100%;
   display: flex;

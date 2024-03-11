@@ -85,7 +85,7 @@ function App() {
       <input value={tvl} onChange={handleChange} />
       <button onClick={handleClick}>Send</button>
       <div className="header">
-        <h2 className="title">Total Locked Value</h2>
+        <h2 className="title">Total Value Locked</h2>
         {loading && (
           <div className="loading">
             <div class="loader"></div>

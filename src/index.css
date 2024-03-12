@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   background-image: url("./bg.jpg");
-  background-size: cover;
+  background-size: auto;
   backdrop-filter: blur(0.5px);
   backdrop-filter: brightness(60%);
 }

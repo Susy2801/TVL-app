@@ -1,112 +1,90 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import ReactTable from "react-table";
+
 import "./App.css";
 
 function App() {
-  const [tvl, setTvl] = useState("");
-  const [result, setResult] = useState("");
-  const [des, setDes] = useState("");
-  const [name, setName] = useState("");
-  const [ava, setAva] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [loadingAva, setLoadingAva] = useState(false);
+  const statAPI = `https://api-beta.piratebattle.xyz/statistic/chart`;
+  const [gameData, setGameData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (tvl.trim() === "") {
-      setResult("");
-      return;
-    }
+    var getStat = async () => {
+      const response = await fetch(statAPI);
+      const data = await response.json();
+      console.log(data);
+      setGameData(data.data.new_user_chart);
+      setLoading(true);
+    };
+    const interval = setInterval(getStat, 5000);
 
-    async function getTVL() {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `https://api.llama.fi/tvl/${tvl
-            .trim()
-            .toLowerCase()
-            .replace(/\s/g, "-")}`
-        );
-        if (response.status === 200) {
-          const data = await response.json();
-          setResult(data);
-        }
-      } catch (error) {
-        console.error("Error fetching TVL:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
+    // Xóa interval khi component bị unmounted
+    return () => clearInterval(interval);
+  }, []);
 
-    async function getAva() {
-      try {
-        setLoadingAva(true);
-        const response = await fetch(
-          `https://api.llama.fi/protocol/${tvl
-            .trim()
-            .toLowerCase()
-            .replace(/\s/g, "-")}`
-        );
-        if (response.status === 200) {
-          const data = await response.json();
-          setAva(data.logo);
-          setDes(data.description);
-          setName(data.name);
-          console.log(data);
-        } else {
-          setAva("");
-        }
-      } catch (error) {
-        console.error("Error fetching TVL:", error);
-      } finally {
-        setLoadingAva(false);
-      }
-    }
-    getAva();
-    getTVL();
-  }, [tvl]);
+  function formatDate(stamp) {
+    const date = new Date(stamp);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
 
-  const handleChange = (e) => {
-    setTvl(e.target.value);
-  };
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  }
 
-  const handleClick = () => {
-    setTvl(tvl);
-  };
+  function getDateNow() {
+    const now = new Date();
 
-  const handleClear = () => {
-    setTvl("");
-    setAva("");
-    setDes("");
-    setName("");
-  };
+    const gio = now.getHours(); // Lấy giờ
+    const phut = now.getMinutes(); // Lấy phút
+    const ngay = now.getDate(); // Lấy ngày
+    const thang = now.getMonth() + 1; // Lấy tháng (chú ý: tháng trong JavaScript bắt đầu từ 0)
+    const nam = now.getFullYear(); // Lấy năm
+
+    var dateNow = `${gio}:${phut} ${ngay}/${thang}/${nam}`;
+    return dateNow;
+  }
+
+  const latestData = gameData[gameData.length - 2];
+  const currentUser = gameData[gameData.length - 1];
+  const lastData = gameData[gameData.length - 3];
 
   return (
     <div className="App">
-      <input value={tvl} onChange={handleChange} />
-      <button onClick={handleClick}>Send</button>
-      <div className="header">
-        <h2 className="title">Total Value Locked</h2>
-        {loading && (
-          <div className="loading">
-            <div class="loader"></div>
+      <div className="user__container">
+        <div>
+          <div className="user__title title"> New User </div>
+          <div className="user__number stat">
+            {isLoading ? latestData.new_user : <div class="loader"></div>}
           </div>
-        )}
-        {result && <strong>$</strong>}
-        {result ? Math.floor(result).toLocaleString() : <div>No data</div>}
-      </div>
-      <button onClick={handleClear}>Clear</button>
-      <div>
-        {loadingAva ? (
-          <div className="loading">
-            {" "}
+        </div>
+
+        <div>
+          <div className="current__user--title title"> Current User</div>
+          {isLoading ? (
+            <div className="current__user--number stat">
+              {currentUser.new_user}
+            </div>
+          ) : (
             <div class="loader"></div>
-          </div>
-        ) : (
-          ava && <img className="ava" src={ava} alt="" />
-        )}
+          )}
+        </div>
+
+        <div>
+          <div className="percent__title title">Chênh lệch so với hôm qua</div>
+          {isLoading ? (
+            <div className="percent__number stat">
+              {((latestData.new_user / lastData.new_user) * 100).toFixed(2) +
+                "%"}
+            </div>
+          ) : (
+            <div class="loader"></div>
+          )}
+        </div>
+
+        <div className="update__time">{`Cập nhật lúc ${getDateNow()}`}</div>
       </div>
-      <div className="name">{name}</div>
-      <div className="des">{des}</div>
     </div>
   );
 }

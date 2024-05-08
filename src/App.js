@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import ReactTable from "react-table";
+import logo from "./Asset/logo.svg";
 
 import "./App.css";
 

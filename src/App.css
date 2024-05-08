@@ -47,11 +47,15 @@
 }
 
 .App {
-  background-color: rgb(42, 42, 42);
   font-family: "Nunito";
+  margin-top: 300px;
 }
+
 .user__container {
-  width: 100%;
+  background-color: rgb(42, 42, 42);
+  border-radius: 10px;
+  width: 80%;
+  margin: 0 auto;
   padding: 30px;
   display: flex;
   align-items: center;

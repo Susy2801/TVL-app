@@ -8,7 +8,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+
+  background-image: url("./Asset/download.png");
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 code {

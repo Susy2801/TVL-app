@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="user__container">
+      <div className="user__container box">
         <div>
           <div className="user__title title"> New User </div>
           <div className="user__number stat">
@@ -86,6 +86,27 @@ function App() {
         <div className="update__time">
           Cập nhập: <span>{getDateNow()}</span>
         </div>
+      </div>
+      <div className="last__container last__box">
+        <div className="old__title">DỮ LIỆU CŨ</div>
+        {gameData
+          .slice()
+          .reverse()
+          .slice(2)
+          .map((data, index) => (
+            <div className="box" key={index}>
+              <div>
+                <div className="user__title title">New user</div>
+                <div className="user__number stat">{data.new_user}</div>
+              </div>
+              <div>
+                <div className="title">Ngày cập nhật</div>
+                <div className="update__time">
+                  <span>{formatDate(data.date)}</span>
+                </div>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

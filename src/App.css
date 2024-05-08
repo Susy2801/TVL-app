@@ -81,3 +81,52 @@
   font-size: 30px;
   margin-bottom: 30px;
 }
+
+/* CHECK REF */
+.check__ref {
+  width: 100%;
+  text-align: center;
+  height: 250px;
+  background-color: rgb(42, 42, 42);
+  border: #ffa516 8px double;
+  border-radius: 10px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.input__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input__box input {
+  width: 30%;
+  border-radius: 5px;
+  height: 40px;
+  border: #ffa516 solid 5px;
+  padding: 4px 4px;
+}
+
+.check__btn {
+  color: white;
+  background-color: #ffa516;
+  padding: 7px;
+  border-radius: 7px;
+  border: white 2px double;
+  cursor: pointer;
+}
+
+.tick {
+  width: 50px;
+  height: 50px;
+  margin-top: 50px;
+}
+
+.check__title {
+  color: #ffa516;
+  font-size: 30px;
+  margin-bottom: 20px;
+}

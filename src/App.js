@@ -1,19 +1,39 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import logo from "./Asset/logo.svg";
+import tick from "./Asset/tick.png";
+import xmark from "./Asset/x.png";
 
 import "./App.css";
 
 function App() {
-  const statAPI = `https://api-beta.piratebattle.xyz/statistic/chart`;
   const [gameData, setGameData] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [isDone, setDone] = useState(false);
+  const [refCode, setCode] = useState("");
+  const [isValid, setValid] = useState();
+  const statAPI = `https://api-beta.piratebattle.xyz/statistic/chart`;
+  const checkAPI = `https://api.piratebattle.xyz/user/check-code?ref_code=${refCode}`;
+
+  useEffect(() => {
+    setDone(false);
+    const getValid = async () => {
+      const response = await fetch(checkAPI);
+      const data = await response.json();
+      console.log(data);
+      if (data.error_code === "") {
+        setValid(data.data.valid);
+      }
+      setDone(true);
+    };
+
+    getValid();
+  }, [checkAPI]);
 
   useEffect(() => {
     var getStat = async () => {
       const response = await fetch(statAPI);
       const data = await response.json();
-      console.log(data);
       setGameData(data.data.new_user_chart);
       setLoading(true);
     };
@@ -52,6 +72,25 @@ function App() {
 
   return (
     <div className="App">
+      <div className="check__ref">
+        <div className="check__title">Check Referral Code</div>
+        <div className="input__box">
+          <input
+            value={refCode}
+            placeholder="Nhập ref code"
+            onChange={(e) => {
+              setCode(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          {isValid ? (
+            <img alt="true" src={tick} className="tick" />
+          ) : (
+            <img alt="false" src={xmark} className="tick" />
+          )}
+        </div>
+      </div>
       <div className="user__container box">
         <div>
           <div className="user__title title"> New User </div>

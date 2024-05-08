@@ -83,7 +83,9 @@ function App() {
           )}
         </div>
 
-        <div className="update__time">{`Cập nhật lúc ${getDateNow()}`}</div>
+        <div className="update__time">
+          Cập nhập: <span>{getDateNow()}</span>
+        </div>
       </div>
     </div>
   );

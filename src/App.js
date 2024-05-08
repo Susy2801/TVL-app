@@ -123,7 +123,7 @@ function App() {
         </div>
 
         <div className="update__time">
-          Cập nhập: <span>{getDateNow()}</span>
+          Cập nhật: <span>{getDateNow()}</span>
         </div>
       </div>
       <div className="last__container last__box">

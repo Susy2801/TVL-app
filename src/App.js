@@ -37,7 +37,7 @@ function App() {
       setGameData(data.data.new_user_chart);
       setLoading(true);
     };
-    const interval = setInterval(getStat, 5000);
+    const interval = setInterval(getStat, 1000000);
 
     // Xóa interval khi component bị unmounted
     return () => clearInterval(interval);
@@ -72,6 +72,7 @@ function App() {
 
   return (
     <div className="App">
+      {/* ========================== */}
       <div className="check__ref">
         <div className="check__title">Check Referral Code</div>
         <div className="input__box">
@@ -91,6 +92,8 @@ function App() {
           )}
         </div>
       </div>
+
+      {/* ================= */}
       <div className="user__container box">
         <div>
           <div className="user__title title"> New User </div>
@@ -111,7 +114,7 @@ function App() {
         </div>
 
         <div>
-          <div className="percent__title title">Chênh lệch so với hôm qua</div>
+          <div className="percent__title title"> So sánh với hôm qua</div>
           {isLoading ? (
             <div className="percent__number stat">
               {((latestData.new_user / lastData.new_user) * 100).toFixed(2) +
@@ -126,6 +129,9 @@ function App() {
           Cập nhật: <span>{getDateNow()}</span>
         </div>
       </div>
+
+      {/* ====================== */}
+
       <div className="last__container last__box">
         <div className="old__title">DỮ LIỆU CŨ</div>
         {gameData
@@ -147,6 +153,7 @@ function App() {
             </div>
           ))}
       </div>
+      {/* ===================== */}
     </div>
   );
 }

@@ -30,17 +30,19 @@ function App() {
     getValid();
   }, [checkAPI]);
 
-  // useEffect(() => {
-  //   var getStat = async () => {
-  //     const response = await fetch(statAPI);
-  //     const data = await response.json();
-  //     setGameData(data.data.new_user_chart);
-  //     setLoading(true);
-  //   };
-  //   const interval = setInterval(getStat, 1000000);
+  useEffect(() => {
+    var getStat = async () => {
+      const response = await fetch(statAPI);
+      const data = await response.json();
+      setGameData(data.data.new_user_chart);
+      setLoading(true);
+    };
+    getStat();
 
-    // Xóa interval khi component bị unmounted
-    return () => clearInterval(interval);
+    // const interval = setInterval(getStat, 1000000);
+
+    // // Xóa interval khi component bị unmounted
+    // return () => clearInterval(interval);
   }, []);
 
   function formatDate(stamp) {
@@ -94,6 +96,14 @@ function App() {
       </div>
 
       {/* ================= */}
+      <div
+        className="refresh"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        Làm mới dữ liệu
+      </div>
       <div className="user__container box">
         <div>
           <div className="user__title title"> New User </div>
